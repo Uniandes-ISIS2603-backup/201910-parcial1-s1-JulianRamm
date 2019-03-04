@@ -30,7 +30,14 @@ public class RecipePersistence {
     public RecipeEntity find(Long id) {
         return em.find(RecipeEntity.class, id);
     }
-    
+    public RecipeEntity createRecipe(RecipeEntity recipeEntity){
+        em.persist(recipeEntity);
+        return recipeEntity;
+    }
+    public RecipeEntity findByName(String name){
+         RecipeEntity en=em.find(RecipeEntity.class, name);
+         return en;
+    }
     //TODO método crear de recipe
 
 }
