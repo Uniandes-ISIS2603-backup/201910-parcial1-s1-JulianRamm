@@ -6,9 +6,12 @@
 package co.edu.uniandes.csw.recipes.test.logic;
 
 import co.edu.uniandes.csw.recipes.ejb.RecipeLogic;
+import co.edu.uniandes.csw.recipes.entities.IngredientEntity;
 import co.edu.uniandes.csw.recipes.entities.RecipeEntity;
 import co.edu.uniandes.csw.recipes.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.recipes.persistence.RecipePersistence;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -35,6 +38,11 @@ public class RecipeLogicTest {
         RecipeEntity a=new RecipeEntity();        
         a.setName("dfs");
         a.setDescription("svdsd");
+        IngredientEntity in=new IngredientEntity();
+        em.persist(in);
+        ArrayList<IngredientEntity> ingrs=new ArrayList<IngredientEntity>();
+        ingrs.add(in);
+        a.setIngredients(ingrs);
         em.persist(a);
         RecipeEntity re=logic.createRecipe(a);
         Assert.assertNotNull(re);
@@ -46,6 +54,7 @@ public class RecipeLogicTest {
         RecipeEntity a=new RecipeEntity();        
         a.setName("");
         a.setDescription("svdsd");
+        
         em.persist(a);
         RecipeEntity re=logic.createRecipe(a);       
     }
@@ -54,6 +63,11 @@ public class RecipeLogicTest {
         RecipeEntity a=new RecipeEntity();        
         a.setName("sa");
         a.setDescription("");
+        IngredientEntity in=new IngredientEntity();
+        em.persist(in);
+        ArrayList<IngredientEntity> ingrs=new ArrayList<IngredientEntity>();
+        ingrs.add(in);
+        a.setIngredients(ingrs);
         em.persist(a);
         RecipeEntity re=logic.createRecipe(a);       
     }
@@ -62,11 +76,24 @@ public class RecipeLogicTest {
         RecipeEntity a=new RecipeEntity();        
         a.setName("sa");
         a.setDescription("vffd");
+        IngredientEntity in=new IngredientEntity();
+        em.persist(in);
+        ArrayList<IngredientEntity> ingrs=new ArrayList<IngredientEntity>();
         em.persist(a);
         RecipeEntity b=new RecipeEntity();        
-        a.setName("sa");
-        a.setDescription("vffda");
+        b.setName("sa");
+        b.setDescription("vffda");
+        b.setIngredients(ingrs);
         RecipeEntity re=logic.createRecipe(b);       
     }
-    
+    @Test(expected = BusinessLogicException.class)
+    public void CreateRecipeTestfail4() throws BusinessLogicException{
+        RecipeEntity a=new RecipeEntity();        
+        a.setName("sa");
+        a.setDescription("");     
+        ArrayList<IngredientEntity> ingrs=new ArrayList<IngredientEntity>();      
+        a.setIngredients(ingrs);
+        em.persist(a);
+        RecipeEntity re=logic.createRecipe(a);       
+    }
 }

@@ -6,12 +6,13 @@
 package co.edu.uniandes.csw.recipes.dtos;
 
 import co.edu.uniandes.csw.recipes.entities.RecipeEntity;
+import java.io.Serializable;
 
 /**
  *
  * @author CesarF
  */
-public class RecipeDTO {
+public class RecipeDTO implements Serializable{
     
     private String name;
     private String description;

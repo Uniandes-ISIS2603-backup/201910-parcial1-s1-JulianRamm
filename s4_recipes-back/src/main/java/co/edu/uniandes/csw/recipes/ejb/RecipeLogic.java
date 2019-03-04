@@ -33,6 +33,10 @@ public class RecipeLogic {
         if(recipeEntity.getDescription().equals("")||recipeEntity.getDescription()==null||recipeEntity.getDescription().length()>150){
             throw new BusinessLogicException("Descripcion invalida");
         }
+        
+        if(recipeEntity.getIngredients().isEmpty()){
+             throw new BusinessLogicException("no hay ingredients");
+        }
         return persistence.createRecipe(recipeEntity);
     }
     //TODO crear el método createRecipe

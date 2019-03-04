@@ -5,20 +5,45 @@
  */
 package co.edu.uniandes.csw.recipes.dtos;
 
+import co.edu.uniandes.csw.recipes.entities.IngredientEntity;
 import co.edu.uniandes.csw.recipes.entities.RecipeEntity;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author CesarF
  */
-public class RecipeDetailDTO extends RecipeDTO {
-    
-    public RecipeDetailDTO(){
-    
-    }
-    
-    public RecipeDetailDTO(RecipeEntity entity){
+public class RecipeDetailDTO extends RecipeDTO implements Serializable {
+
+    private List<IngredientDTO> ingredients;
+
+ 
+    public RecipeDetailDTO(RecipeEntity entity) {
         super(entity);
+        if (entity != null) {
+            if (entity.getIngredients() != null) {
+                ingredients = new ArrayList<>();
+                for (IngredientEntity entityIngredient : entity.getIngredients()) {
+                    ingredients.add(new IngredientDTO(entityIngredient));
+                }
+            }
+        }
     }
-    
+
+    /**
+     * @return the ingredients
+     */
+    public List<IngredientDTO> getIngredients() {
+        return ingredients;
+    }
+
+    /**
+     * @param ingredients the ingredients to set
+     */
+    public void setIngredients(List<IngredientDTO> ingredients) {
+        this.ingredients = ingredients;
+    }
+
 }
